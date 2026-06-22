@@ -1,0 +1,252 @@
+[
+  {
+    "text": "The only way to do great work is to love what you do.",
+    "author": "Steve Jobs",
+    "category": "success"
+  },
+  {
+    "text": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    "author": "Winston Churchill",
+    "category": "success"
+  },
+  {
+    "text": "Do not watch the clock; do what it does. Keep going.",
+    "author": "Sam Levenson",
+    "category": "motivation"
+  },
+  {
+    "text": "The future belongs to those who believe in the beauty of their dreams.",
+    "author": "Eleanor Roosevelt",
+    "category": "motivation"
+  },
+  {
+    "text": "In the end, we will remember not the words of our enemies, but the silence of our friends.",
+    "author": "Martin Luther King Jr.",
+    "category": "wisdom"
+  },
+  {
+    "text": "The only true wisdom is in knowing you know nothing.",
+    "author": "Socrates",
+    "category": "wisdom"
+  },
+  {
+    "text": "Love is not about possession. Love is about appreciation.",
+    "author": "Osho",
+    "category": "love"
+  },
+  {
+    "text": "Being deeply loved by someone gives you strength, while loving someone deeply gives you courage.",
+    "author": "Lao Tzu",
+    "category": "love"
+  },
+  {
+    "text": "Life is what happens when you're busy making other plans.",
+    "author": "John Lennon",
+    "category": "life"
+  },
+  {
+    "text": "Spread love everywhere you go. Let no one ever come to you without leaving happier.",
+    "author": "Mother Teresa",
+    "category": "love"
+  },
+  {
+    "text": "I have not failed. I've just found 10,000 ways that won't work.",
+    "author": "Thomas A. Edison",
+    "category": "success"
+  },
+  {
+    "text": "It is during our darkest moments that we must focus to see the light.",
+    "author": "Aristotle",
+    "category": "motivation"
+  },
+  {
+    "text": "Believe you can and you're halfway there.",
+    "author": "Theodore Roosevelt",
+    "category": "motivation"
+  },
+  {
+    "text": "Yesterday is history, tomorrow is a mystery, today is a gift of God, which is why we call it the present.",
+    "author": "Bill Keane",
+    "category": "life"
+  },
+  {
+    "text": "The only impossible journey is the one you never begin.",
+    "author": "Tony Robbins",
+    "category": "motivation"
+  },
+  {
+    "text": "If you want to live a happy life, tie it to a goal, not to people or things.",
+    "author": "Albert Einstein",
+    "category": "life"
+  },
+  {
+    "text": "The mind is everything. What you think you become.",
+    "author": "Buddha",
+    "category": "wisdom"
+  },
+  {
+    "text": "Out of clutter, find simplicity. From discord, find harmony. In the middle of difficulty lies opportunity.",
+    "author": "Albert Einstein",
+    "category": "wisdom"
+  },
+  {
+    "text": "You will face many defeats in life, but never let yourself be defeated.",
+    "author": "Maya Angelou",
+    "category": "motivation"
+  },
+  {
+    "text": "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+    "author": "Nelson Mandela",
+    "category": "motivation"
+  },
+  {
+    "text": "The purpose of our lives is to be happy.",
+    "author": "Dalai Lama",
+    "category": "life"
+  },
+  {
+    "text": "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+    "author": "Ralph Waldo Emerson",
+    "category": "wisdom"
+  },
+  {
+    "text": "Keep smiling, because life is a beautiful thing and there's so much to smile about.",
+    "author": "Marilyn Monroe",
+    "category": "life"
+  },
+  {
+    "text": "The best and most beautiful things in this world cannot be seen or even heard, but must be felt with the heart.",
+    "author": "Helen Keller",
+    "category": "love"
+  },
+  {
+    "text": "You miss 100% of the shots you don't take.",
+    "author": "Wayne Gretzky",
+    "category": "success"
+  },
+  {
+    "text": "You know you're in love when you can't fall asleep because reality is finally better than your dreams.",
+    "author": "Dr. Seuss",
+    "category": "love"
+  },
+  {
+    "text": "Try to be a rainbow in someone's cloud.",
+    "author": "Maya Angelou",
+    "category": "love"
+  },
+  {
+    "text": "If you judge people, you have no time to love them.",
+    "author": "Mother Teresa",
+    "category": "love"
+  },
+  {
+    "text": "A room without books is like a body without a soul.",
+    "author": "Marcus Tullius Cicero",
+    "category": "wisdom"
+  },
+  {
+    "text": "Always remember that you are absolutely unique. Just like everyone else.",
+    "author": "Margaret Mead",
+    "category": "humor"
+  },
+  {
+    "text": "I refuse to join any club that would have me as a member.",
+    "author": "Groucho Marx",
+    "category": "humor"
+  },
+  {
+    "text": "The secret of getting ahead is getting started.",
+    "author": "Mark Twain",
+    "category": "success"
+  },
+  {
+    "text": "I can resist everything except temptation.",
+    "author": "Oscar Wilde",
+    "category": "humor"
+  },
+  {
+    "text": "Age is something that doesn't matter, unless you are a cheese.",
+    "author": "Luis Bunuel",
+    "category": "humor"
+  },
+  {
+    "text": "A day without sunshine is like, you know, night.",
+    "author": "Steve Martin",
+    "category": "humor"
+  },
+  {
+    "text": "I found there was only one way to look thin: hang out with fat people.",
+    "author": "Rodney Dangerfield",
+    "category": "humor"
+  },
+  {
+    "text": "Whoever is happy will make others happy too.",
+    "author": "Anne Frank",
+    "category": "life"
+  },
+  {
+    "text": "We don't stop playing because we grow old; we grow old because we stop playing.",
+    "author": "George Bernard Shaw",
+    "category": "life"
+  },
+  {
+    "text": "The truth is, everyone is going to hurt you. You just got to find the ones worth suffering for.",
+    "author": "Bob Marley",
+    "category": "love"
+  },
+  {
+    "text": "The wound is the place where the Light enters you.",
+    "author": "Rumi",
+    "category": "wisdom"
+  },
+  {
+    "text": "It does not matter how slowly you go as long as you do not stop.",
+    "author": "Confucius",
+    "category": "success"
+  },
+  {
+    "text": "Everything has beauty, but not everyone sees it.",
+    "author": "Confucius",
+    "category": "wisdom"
+  },
+  {
+    "text": "Before you embark on a journey of revenge, dig two graves.",
+    "author": "Confucius",
+    "category": "wisdom"
+  },
+  {
+    "text": "Do not make friends with a companion who is not your equal.",
+    "author": "Confucius",
+    "category": "wisdom"
+  },
+  {
+    "text": "If you look at what you have in life, you'll always have more.",
+    "author": "Oprah Winfrey",
+    "category": "success"
+  },
+  {
+    "text": "I used to think I was indecisive, but now I'm not so sure.",
+    "author": "Tommy Cooper",
+    "category": "humor"
+  },
+  {
+    "text": "My wife told me to stop impersonating a flamingo. I had to put my foot down.",
+    "author": "Marcus Brigstocke",
+    "category": "humor"
+  },
+  {
+    "text": "Do what you can, with what you have, where you are.",
+    "author": "Theodore Roosevelt",
+    "category": "motivation"
+  },
+  {
+    "text": "Whether you think you can or think you can't, you're right.",
+    "author": "Henry Ford",
+    "category": "success"
+  },
+  {
+    "text": "The best revenge is massive success.",
+    "author": "Frank Sinatra",
+    "category": "success"
+  }
+]
