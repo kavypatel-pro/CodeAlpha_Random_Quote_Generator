@@ -2,7 +2,6 @@
 
 [![Flutter Version](https://img.shields.io/badge/Flutter-v3.22+-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart Version](https://img.shields.io/badge/Dart-v3.0+-0175C2?logo=dart&logoColor=white)](https://dart.dev)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Internship](https://img.shields.io/badge/Internship-CodeAlpha-red)](https://www.codealpha.tech/)
 
 A feature-rich, modern Flutter application developed as part of the **CodeAlpha App Development Internship**. The application delivers inspirational and motivational quotes, leveraging local storage for persistence and offline usage, alongside an AI-powered personalized quote generator powered by the Anthropic Claude API.
@@ -115,12 +114,6 @@ CodeAlpha_Random_Quote_Generator/
 ├── screenshots/        # UI screenshots for documentation
 └── test/               # Unit and widget tests
 ```
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
