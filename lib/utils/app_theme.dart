@@ -32,7 +32,6 @@ class AppTheme {
         primary: lightPrimary,
         secondary: lightSecondary,
         surface: lightCardBg,
-        background: lightBackground,
         error: Colors.red,
       ),
       textTheme: TextTheme(
@@ -119,7 +118,10 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey.shade300),
@@ -136,10 +138,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Colors.red, width: 1),
         ),
-        hintStyle: GoogleFonts.inter(
-          color: lightMuted,
-          fontSize: 15,
-        ),
+        hintStyle: GoogleFonts.inter(color: lightMuted, fontSize: 15),
       ),
     );
   }
@@ -156,7 +155,6 @@ class AppTheme {
         primary: darkPrimary,
         secondary: darkSecondary,
         surface: darkCardBg,
-        background: darkBackground,
         error: Colors.redAccent,
       ),
       textTheme: TextTheme(
@@ -243,7 +241,10 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: const Color(0xFF1E293B),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Color(0xFF334155)),
@@ -260,10 +261,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Colors.redAccent, width: 1),
         ),
-        hintStyle: GoogleFonts.inter(
-          color: darkMuted,
-          fontSize: 15,
-        ),
+        hintStyle: GoogleFonts.inter(color: darkMuted, fontSize: 15),
       ),
     );
   }

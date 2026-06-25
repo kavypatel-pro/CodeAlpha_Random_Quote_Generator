@@ -17,15 +17,13 @@ class FavoritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
     final quotes = Provider.of<QuoteProvider>(context);
-    
+
     final userPlan = auth.currentUser?.plan ?? AppConstants.planBasic;
     final isBasic = userPlan == AppConstants.planBasic;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Favorites'),
-      ),
+      appBar: AppBar(title: const Text('My Favorites')),
       body: isBasic
           // Plan lock barrier state
           ? Center(
@@ -35,36 +33,43 @@ class FavoritesScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.lock_outline_rounded,
-                        size: 70,
-                        color: Colors.red,
-                      ),
-                    )
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withValues(alpha: 0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.lock_outline_rounded,
+                            size: 70,
+                            color: Colors.red,
+                          ),
+                        )
                         .animate()
-                        .scale(begin: const Offset(0.8, 0.8), end: const Offset(1.0, 1.0), duration: 400.ms, curve: Curves.easeOutBack)
+                        .scale(
+                          begin: const Offset(0.8, 0.8),
+                          end: const Offset(1.0, 1.0),
+                          duration: 400.ms,
+                          curve: Curves.easeOutBack,
+                        )
                         .fadeIn(duration: 400.ms),
                     const SizedBox(height: 24),
                     Text(
                       'Unlock Favorites',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     Text(
                       'Upgrade to Silver or Gold to save your favorite quotes and build your personal collection of inspiration.',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
-                            height: 1.5,
-                          ),
+                        color: isDark
+                            ? const Color(0xFF94A3B8)
+                            : const Color(0xFF64748B),
+                        height: 1.5,
+                      ),
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton.icon(
@@ -77,7 +82,10 @@ class FavoritesScreen extends StatelessWidget {
                       icon: const Icon(Icons.star_rounded, color: Colors.white),
                       label: const Text('Upgrade Plan'),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -85,55 +93,67 @@ class FavoritesScreen extends StatelessWidget {
               ),
             )
           : quotes.favorites.isEmpty
-              // Empty State
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
+          // Empty State
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
                           Icons.favorite_border_rounded,
                           size: 80,
-                          color: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+                          color: isDark
+                              ? const Color(0xFF475569)
+                              : const Color(0xFFCBD5E1),
                         )
-                            .animate()
-                            .scale(begin: const Offset(0.9, 0.9), end: const Offset(1.0, 1.0), duration: 400.ms, curve: Curves.easeOutBack)
-                            .fadeIn(duration: 400.ms),
-                        const SizedBox(height: 16),
-                        Text(
-                          'No favorites yet.',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Tap the heart icon on any quote to save it here.',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
-                              ),
-                        ),
-                        const SizedBox(height: 24),
-                        OutlinedButton(
-                          onPressed: () {
-                            final navState = context.findAncestorStateOfType<MainNavigationScreenState>();
-                            navState?.setSelectedIndex(0);
-                          },
-                          child: const Text('Discover Quotes'),
-                        ),
-                      ],
+                        .animate()
+                        .scale(
+                          begin: const Offset(0.9, 0.9),
+                          end: const Offset(1.0, 1.0),
+                          duration: 400.ms,
+                          curve: Curves.easeOutBack,
+                        )
+                        .fadeIn(duration: 400.ms),
+                    const SizedBox(height: 16),
+                    Text(
+                      'No favorites yet.',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                )
-              // Favorites list
-              : ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: quotes.favorites.length,
-                  itemBuilder: (context, index) {
-                    final Quote quote = quotes.favorites[index];
-                    return Padding(
+                    const SizedBox(height: 8),
+                    Text(
+                      'Tap the heart icon on any quote to save it here.',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: isDark
+                            ? const Color(0xFF64748B)
+                            : const Color(0xFF94A3B8),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    OutlinedButton(
+                      onPressed: () {
+                        final navState = context
+                            .findAncestorStateOfType<
+                              MainNavigationScreenState
+                            >();
+                        navState?.setSelectedIndex(0);
+                      },
+                      child: const Text('Discover Quotes'),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          // Favorites list
+          : ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: quotes.favorites.length,
+              itemBuilder: (context, index) {
+                final Quote quote = quotes.favorites[index];
+                return Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       // Swipe-to-delete implementation
                       child: Dismissible(
@@ -164,10 +184,7 @@ class FavoritesScreen extends StatelessWidget {
                         },
                         child: Stack(
                           children: [
-                            QuoteCard(
-                              quote: quote,
-                              isCompact: true,
-                            ),
+                            QuoteCard(quote: quote, isCompact: true),
                             // Delete (trash) icon on top-right
                             Positioned(
                               top: 8,
@@ -191,11 +208,11 @@ class FavoritesScreen extends StatelessWidget {
                         ),
                       ),
                     )
-                        .animate()
-                        .fadeIn(delay: (index * 50).ms, duration: 300.ms)
-                        .slideY(begin: 0.05, end: 0.0, curve: Curves.easeOutCubic);
-                  },
-                ),
+                    .animate()
+                    .fadeIn(delay: (index * 50).ms, duration: 300.ms)
+                    .slideY(begin: 0.05, end: 0.0, curve: Curves.easeOutCubic);
+              },
+            ),
     );
   }
 }

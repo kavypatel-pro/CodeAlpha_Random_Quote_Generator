@@ -38,7 +38,9 @@ class MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = Theme.of(context).primaryColor;
-    final unselectedColor = isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8);
+    final unselectedColor = isDark
+        ? const Color(0xFF64748B)
+        : const Color(0xFF94A3B8);
 
     return Scaffold(
       body: AnimatedSwitcher(
@@ -46,10 +48,7 @@ class MainNavigationScreenState extends State<MainNavigationScreen> {
         switchInCurve: Curves.easeInOut,
         switchOutCurve: Curves.easeInOut,
         transitionBuilder: (Widget child, Animation<double> animation) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
+          return FadeTransition(opacity: animation, child: child);
         },
         child: _screens[_selectedIndex],
       ),
@@ -57,7 +56,7 @@ class MainNavigationScreenState extends State<MainNavigationScreen> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
               blurRadius: 10,
               offset: const Offset(0, -2),
             ),
@@ -68,8 +67,14 @@ class MainNavigationScreenState extends State<MainNavigationScreen> {
           onTap: setSelectedIndex,
           selectedItemColor: primaryColor,
           unselectedItemColor: unselectedColor,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+          selectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.normal,
+            fontSize: 12,
+          ),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),

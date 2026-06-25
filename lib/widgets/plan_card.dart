@@ -72,10 +72,15 @@ class _PlanCardState extends State<PlanCard> {
             borderRadius: BorderRadius.circular(20),
             border: widget.isHighlighted
                 ? Border.all(color: widget.accentColor, width: 2.5)
-                : Border.all(color: isDark ? const Color(0xFF334155) : Colors.grey.shade200, width: 1),
+                : Border.all(
+                    color: isDark
+                        ? const Color(0xFF334155)
+                        : Colors.grey.shade200,
+                    width: 1,
+                  ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(isDark ? 0.25 : 0.04),
+                color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.04),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -89,7 +94,9 @@ class _PlanCardState extends State<PlanCard> {
                 Container(
                   decoration: BoxDecoration(
                     color: widget.accentColor,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(17)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(17),
+                    ),
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: const Text(
@@ -103,7 +110,7 @@ class _PlanCardState extends State<PlanCard> {
                     ),
                   ),
                 ),
-              
+
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -115,11 +122,16 @@ class _PlanCardState extends State<PlanCard> {
                       children: [
                         Row(
                           children: [
-                            Icon(widget.icon, color: widget.accentColor, size: 28),
+                            Icon(
+                              widget.icon,
+                              color: widget.accentColor,
+                              size: 28,
+                            ),
                             const SizedBox(width: 8),
                             Text(
                               widget.title,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
@@ -128,9 +140,14 @@ class _PlanCardState extends State<PlanCard> {
                         ),
                         if (widget.isCurrent)
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
-                              color: isDark ? const Color(0xFF334155) : Colors.grey.shade100,
+                              color: isDark
+                                  ? const Color(0xFF334155)
+                                  : Colors.grey.shade100,
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -138,27 +155,29 @@ class _PlanCardState extends State<PlanCard> {
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
+                                color: isDark
+                                    ? const Color(0xFF94A3B8)
+                                    : const Color(0xFF6B7280),
                               ),
                             ),
                           ),
                       ],
                     ),
                     const SizedBox(height: 12),
-                    
+
                     // Price
                     Text(
                       widget.price,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w800,
-                            color: widget.accentColor,
-                          ),
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        color: widget.accentColor,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Divider(color: Theme.of(context).dividerColor),
                     const SizedBox(height: 12),
-                    
+
                     // Features list
                     ListView.builder(
                       shrinkWrap: true,
@@ -171,20 +190,31 @@ class _PlanCardState extends State<PlanCard> {
                           child: Row(
                             children: [
                               Icon(
-                                hasIt ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                                hasIt
+                                    ? Icons.check_circle_rounded
+                                    : Icons.cancel_rounded,
                                 color: hasIt
-                                    ? (isDark ? Colors.green.shade400 : Colors.green.shade600)
-                                    : (isDark ? Colors.red.shade400 : Colors.red.shade600),
+                                    ? (isDark
+                                          ? Colors.green.shade400
+                                          : Colors.green.shade600)
+                                    : (isDark
+                                          ? Colors.red.shade400
+                                          : Colors.red.shade600),
                                 size: 18,
                               ),
                               const SizedBox(width: 10),
                               Expanded(
                                 child: Text(
                                   widget.features[idx],
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context).textTheme.bodyMedium
+                                      ?.copyWith(
                                         color: hasIt
-                                            ? (isDark ? Colors.white : Colors.black87)
-                                            : (isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8)),
+                                            ? (isDark
+                                                  ? Colors.white
+                                                  : Colors.black87)
+                                            : (isDark
+                                                  ? const Color(0xFF64748B)
+                                                  : const Color(0xFF94A3B8)),
                                       ),
                                 ),
                               ),
@@ -194,7 +224,7 @@ class _PlanCardState extends State<PlanCard> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    
+
                     // Button
                     SizedBox(
                       width: double.infinity,
@@ -202,28 +232,37 @@ class _PlanCardState extends State<PlanCard> {
                           ? OutlinedButton(
                               onPressed: null, // Disabled if current plan
                               style: OutlinedButton.styleFrom(
-                                foregroundColor: isDark ? const Color(0xFF475569) : Colors.grey.shade400,
-                                side: BorderSide(color: isDark ? const Color(0xFF334155) : Colors.grey.shade300),
+                                foregroundColor: isDark
+                                    ? const Color(0xFF475569)
+                                    : Colors.grey.shade400,
+                                side: BorderSide(
+                                  color: isDark
+                                      ? const Color(0xFF334155)
+                                      : Colors.grey.shade300,
+                                ),
                               ),
                               child: const Text('Current Plan'),
                             )
                           : widget.isHighlighted
-                              ? ElevatedButton(
-                                  onPressed: widget.onPressed,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: widget.accentColor,
-                                    foregroundColor: Colors.white,
-                                  ),
-                                  child: Text(widget.buttonText),
-                                )
-                              : OutlinedButton(
-                                  onPressed: widget.onPressed,
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: widget.accentColor,
-                                    side: BorderSide(color: widget.accentColor, width: 1.5),
-                                  ),
-                                  child: Text(widget.buttonText),
+                          ? ElevatedButton(
+                              onPressed: widget.onPressed,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: widget.accentColor,
+                                foregroundColor: Colors.white,
+                              ),
+                              child: Text(widget.buttonText),
+                            )
+                          : OutlinedButton(
+                              onPressed: widget.onPressed,
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: widget.accentColor,
+                                side: BorderSide(
+                                  color: widget.accentColor,
+                                  width: 1.5,
                                 ),
+                              ),
+                              child: Text(widget.buttonText),
+                            ),
                     ),
                   ],
                 ),

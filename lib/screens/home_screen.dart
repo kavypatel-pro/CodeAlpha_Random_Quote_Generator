@@ -30,27 +30,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Quote? _lastRecordedQuote;
 
   Future<void> _shareAsText(Quote quote) async {
-    final textToShare = '"${quote.text}"\n— ${quote.author}\n\nShared via QuoteVerse: Words that move you.';
+    final textToShare =
+        '"${quote.text}"\n— ${quote.author}\n\nShared via QuoteVerse: Words that move you.';
     await Share.share(textToShare);
   }
 
   Future<void> _shareAsImage(Quote quote) async {
     try {
-      final boundary = _shareBoundaryKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      final boundary =
+          _shareBoundaryKey.currentContext?.findRenderObject()
+              as RenderRepaintBoundary?;
       if (boundary == null) return;
-      
+
       // Build a dialog indicator
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        builder: (context) => const Center(child: CircularProgressIndicator()),
       );
 
       final image = await boundary.toImage(pixelRatio: 3.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      
+
       if (mounted) {
         Navigator.pop(context); // Dismiss loading dialog
       }
@@ -59,18 +60,19 @@ class _HomeScreenState extends State<HomeScreen> {
       final pngBytes = byteData.buffer.asUint8List();
 
       final tempDir = await getTemporaryDirectory();
-      final file = await File('${tempDir.path}/quote_${DateTime.now().millisecondsSinceEpoch}.png').create();
+      final file = await File(
+        '${tempDir.path}/quote_${DateTime.now().millisecondsSinceEpoch}.png',
+      ).create();
       await file.writeAsBytes(pngBytes);
 
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: '"${quote.text}" — ${quote.author}',
-      );
+      await Share.shareXFiles([
+        XFile(file.path),
+      ], text: '"${quote.text}" — ${quote.author}');
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to export image: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to export image: $e')));
       }
     }
   }
@@ -121,14 +123,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (!isGold) ...[
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF185FA5),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: const Text(
                           'GOLD',
-                          style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -147,7 +156,9 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Gold Feature Required'),
-        content: Text('$featureName is exclusively available to Gold members. Upgrade now to get priority access, image card exports, and personalized collections!'),
+        content: Text(
+          '$featureName is exclusively available to Gold members. Upgrade now to get priority access, image card exports, and personalized collections!',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -157,7 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               Navigator.pop(context);
               // Navigate to Plans tab/screen
-              final navState = context.findAncestorStateOfType<State<MainNavigationScreen>>();
+              final navState = context
+                  .findAncestorStateOfType<State<MainNavigationScreen>>();
               if (navState != null) {
                 // If nested inside MainNavigation, update selected tab to Plans (or profile settings)
                 // However, we can simply push PlansScreen directly on top.
@@ -184,8 +196,8 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Row(
-          children: const [
+        title: const Row(
+          children: [
             Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 28),
             SizedBox(width: 8),
             Text('Limit Reached'),
@@ -219,8 +231,8 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Row(
-          children: const [
+        title: const Row(
+          children: [
             Icon(Icons.lock_rounded, color: Colors.amber, size: 28),
             SizedBox(width: 8),
             Text('Theme Locked'),
@@ -259,7 +271,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Record quote category interactions dynamically
-    if (quotes.currentQuote != null && quotes.currentQuote != _lastRecordedQuote && !quotes.isLoading && !quotes.isAiLoading) {
+    if (quotes.currentQuote != null &&
+        quotes.currentQuote != _lastRecordedQuote &&
+        !quotes.isLoading &&
+        !quotes.isAiLoading) {
       _lastRecordedQuote = quotes.currentQuote;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         quotes.recordCategoryInteraction(quotes.currentQuote!.category);
@@ -280,7 +295,9 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(
-              theme.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+              theme.isDarkMode
+                  ? Icons.light_mode_rounded
+                  : Icons.dark_mode_rounded,
             ),
             onPressed: () {
               if (userPlan == AppConstants.planBasic) {
@@ -301,59 +318,71 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Spacer(),
-                  
+
                   // Quote Card inside AnimatedSwitcher
                   Expanded(
                     flex: 4,
                     child: Center(
                       child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
-                        transitionBuilder: (Widget child, Animation<double> animation) {
-                          // Fade + Slide transition for the card
-                          final offsetAnimation = Tween<Offset>(
-                            begin: const Offset(0.0, 0.05),
-                            end: Offset.zero,
-                          ).animate(CurvedAnimation(
-                            parent: animation,
-                            curve: Curves.easeOutCubic,
-                          ));
-                          return FadeTransition(
-                            opacity: animation,
-                            child: SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            ),
-                          );
-                        },
+                        transitionBuilder:
+                            (Widget child, Animation<double> animation) {
+                              // Fade + Slide transition for the card
+                              final offsetAnimation =
+                                  Tween<Offset>(
+                                    begin: const Offset(0.0, 0.05),
+                                    end: Offset.zero,
+                                  ).animate(
+                                    CurvedAnimation(
+                                      parent: animation,
+                                      curve: Curves.easeOutCubic,
+                                    ),
+                                  );
+                              return FadeTransition(
+                                opacity: animation,
+                                child: SlideTransition(
+                                  position: offsetAnimation,
+                                  child: child,
+                                ),
+                              );
+                            },
                         child: (quotes.isLoading || quotes.isAiLoading)
                             // Shimmer state (animated pulse)
                             ? Container(
-                                key: const ValueKey('shimmer_state'),
-                                height: 260,
-                                decoration: BoxDecoration(
-                                  color: isDark ? const Color(0xFF1E293B) : Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              )
-                                .animate(onPlay: (controller) => controller.repeat(reverse: true))
-                                .fadeIn(duration: 300.ms)
-                                .shimmer(
-                                  color: Theme.of(context).primaryColor.withOpacity(isDark ? 0.15 : 0.08),
-                                  duration: 800.ms,
-                                )
+                                    key: const ValueKey('shimmer_state'),
+                                    height: 260,
+                                    decoration: BoxDecoration(
+                                      color: isDark
+                                          ? const Color(0xFF1E293B)
+                                          : Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  )
+                                  .animate(
+                                    onPlay: (controller) =>
+                                        controller.repeat(reverse: true),
+                                  )
+                                  .fadeIn(duration: 300.ms)
+                                  .shimmer(
+                                    color: Theme.of(context).primaryColor
+                                        .withValues(
+                                          alpha: isDark ? 0.15 : 0.08,
+                                        ),
+                                    duration: 800.ms,
+                                  )
                             // Actual Quote Card
                             : quotes.currentQuote != null
-                                ? QuoteCard(
-                                    key: ValueKey(quotes.currentQuote!.text),
-                                    quote: quotes.currentQuote!,
-                                    boundaryKey: _shareBoundaryKey,
-                                  )
-                                : const SizedBox.shrink(),
+                            ? QuoteCard(
+                                key: ValueKey(quotes.currentQuote!.text),
+                                quote: quotes.currentQuote!,
+                                boundaryKey: _shareBoundaryKey,
+                              )
+                            : const SizedBox.shrink(),
                       ),
                     ),
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // 3 Action buttons row
                   if (quotes.currentQuote != null && !quotes.isLoading)
                     Row(
@@ -361,49 +390,60 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         // Favorite Heart Icon Button
                         IconButton(
-                          iconSize: 28,
-                          icon: Icon(
-                            quotes.isFavorite(quotes.currentQuote!)
-                                ? Icons.favorite_rounded
-                                : Icons.favorite_border_rounded,
-                            color: quotes.isFavorite(quotes.currentQuote!) ? Colors.red : null,
-                          ),
-                          // Heart bounce animation on press
-                          onPressed: () async {
-                            final currentQuote = quotes.currentQuote!;
-                            
-                            // Guest and Basic restrictions
-                            final errorMsg = await quotes.toggleFavorite(currentQuote, userPlan);
-                            if (errorMsg != null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(errorMsg),
-                                  behavior: SnackBarBehavior.floating,
-                                  action: SnackBarAction(
-                                    label: 'Upgrade',
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        SlideRightToLeftRoute(page: const PlansScreen()),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              );
-                            } else {
-                              setState(() {
-                                _isHeartBouncing = true;
-                              });
-                              Future.delayed(const Duration(milliseconds: 150), () {
-                                if (mounted) {
+                              iconSize: 28,
+                              icon: Icon(
+                                quotes.isFavorite(quotes.currentQuote!)
+                                    ? Icons.favorite_rounded
+                                    : Icons.favorite_border_rounded,
+                                color: quotes.isFavorite(quotes.currentQuote!)
+                                    ? Colors.red
+                                    : null,
+                              ),
+                              // Heart bounce animation on press
+                              onPressed: () async {
+                                final currentQuote = quotes.currentQuote!;
+
+                                // Guest and Basic restrictions
+                                final errorMsg = await quotes.toggleFavorite(
+                                  currentQuote,
+                                  userPlan,
+                                );
+                                if (!context.mounted) return;
+                                if (errorMsg != null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(errorMsg),
+                                      behavior: SnackBarBehavior.floating,
+                                      action: SnackBarAction(
+                                        label: 'Upgrade',
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            SlideRightToLeftRoute(
+                                              page: const PlansScreen(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                } else {
                                   setState(() {
-                                    _isHeartBouncing = false;
+                                    _isHeartBouncing = true;
                                   });
+                                  Future.delayed(
+                                    const Duration(milliseconds: 150),
+                                    () {
+                                      if (mounted) {
+                                        setState(() {
+                                          _isHeartBouncing = false;
+                                        });
+                                      }
+                                    },
+                                  );
                                 }
-                              });
-                            }
-                          },
-                        )
+                              },
+                            )
                             .animate(target: _isHeartBouncing ? 1.0 : 0.0)
                             .scale(
                               begin: const Offset(1.0, 1.0),
@@ -419,23 +459,30 @@ class _HomeScreenState extends State<HomeScreen> {
                               curve: Curves.easeIn,
                             ),
                         const SizedBox(width: 24),
-                        
+
                         // Share Icon Button
                         IconButton(
                           iconSize: 26,
                           icon: const Icon(Icons.share_rounded),
-                          onPressed: () => _showShareOptions(context, quotes.currentQuote!, userPlan),
+                          onPressed: () => _showShareOptions(
+                            context,
+                            quotes.currentQuote!,
+                            userPlan,
+                          ),
                         ),
                         const SizedBox(width: 24),
-                        
+
                         // Copy Icon Button
                         IconButton(
                           iconSize: 26,
                           icon: const Icon(Icons.copy_rounded),
                           onPressed: () {
-                            Clipboard.setData(ClipboardData(
-                              text: '"${quotes.currentQuote!.text}" — ${quotes.currentQuote!.author}',
-                            ));
+                            Clipboard.setData(
+                              ClipboardData(
+                                text:
+                                    '"${quotes.currentQuote!.text}" — ${quotes.currentQuote!.author}',
+                              ),
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Copied!'),
@@ -446,13 +493,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                       ],
-                    )
-                        .animate()
-                        .fadeIn(delay: 200.ms, duration: 300.ms),
-                        
+                    ).animate().fadeIn(delay: 200.ms, duration: 300.ms),
+
                   const Spacer(),
                   const SizedBox(height: 24),
-                  
+
                   // "New Quote" button
                   SizedBox(
                     width: double.infinity,
@@ -460,7 +505,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: quotes.isLoading || quotes.isAiLoading
                           ? null
                           : () async {
-                              final success = await quotes.loadNewQuote(userPlan);
+                              final success = await quotes.loadNewQuote(
+                                userPlan,
+                              );
                               if (!success) {
                                 _showLimitReachedDialog();
                               }
@@ -468,7 +515,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const Text('New Quote'),
                     ),
                   ),
-                  
+
                   // "Generate AI Quote" button for Gold users
                   const SizedBox(height: 12),
                   SizedBox(
@@ -478,22 +525,34 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: quotes.isAiLoading || quotes.isLoading
                                 ? null
                                 : () async {
-                                    final success = await quotes.generateAiQuote(userPlan);
+                                    final success = await quotes
+                                        .generateAiQuote(userPlan);
+                                    if (!context.mounted) return;
                                     if (success) {
                                       final msg = quotes.aiError != null
                                           ? quotes.aiError!
                                           : 'AI Quote generated successfully!';
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
                                         SnackBar(
                                           content: Text(msg),
                                           behavior: SnackBarBehavior.floating,
-                                          backgroundColor: quotes.aiError != null ? Colors.orange : Colors.green,
+                                          backgroundColor:
+                                              quotes.aiError != null
+                                              ? Colors.orange
+                                              : Colors.green,
                                         ),
                                       );
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
                                         SnackBar(
-                                          content: Text(quotes.aiError ?? 'Failed to generate AI quote.'),
+                                          content: Text(
+                                            quotes.aiError ??
+                                                'Failed to generate AI quote.',
+                                          ),
                                           behavior: SnackBarBehavior.floating,
                                           backgroundColor: Colors.red,
                                         ),
@@ -504,10 +563,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ? const SizedBox(
                                     width: 20,
                                     height: 20,
-                                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
                                   )
                                 : const Icon(Icons.auto_awesome_rounded),
-                            label: Text(quotes.isAiLoading ? 'Generating AI Quote...' : 'Generate AI Quote'),
+                            label: Text(
+                              quotes.isAiLoading
+                                  ? 'Generating AI Quote...'
+                                  : 'Generate AI Quote',
+                            ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF185FA5),
                               foregroundColor: Colors.white,
@@ -517,10 +583,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               _showGoldRequiredDialog('AI Personalized Quotes');
                             },
-                            icon: const Icon(Icons.lock_rounded, color: Colors.amber, size: 20),
+                            icon: const Icon(
+                              Icons.lock_rounded,
+                              color: Colors.amber,
+                              size: 20,
+                            ),
                             label: const Text('Generate AI Quote'),
                             style: OutlinedButton.styleFrom(
-                              side: const BorderSide(color: Colors.amber, width: 1.5),
+                              side: const BorderSide(
+                                color: Colors.amber,
+                                width: 1.5,
+                              ),
                               foregroundColor: Colors.amber,
                             ),
                           ),

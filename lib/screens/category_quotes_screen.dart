@@ -31,8 +31,10 @@ class _CategoryQuotesScreenState extends State<CategoryQuotesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<QuoteProvider>(context, listen: false)
-          .recordCategoryInteraction(widget.category.id);
+      Provider.of<QuoteProvider>(
+        context,
+        listen: false,
+      ).recordCategoryInteraction(widget.category.id);
     });
   }
 
@@ -43,34 +45,39 @@ class _CategoryQuotesScreenState extends State<CategoryQuotesScreen> {
   }
 
   Future<void> _shareAsText(Quote quote) async {
-    final textToShare = '"${quote.text}"\n— ${quote.author}\n\nShared via QuoteVerse.';
+    final textToShare =
+        '"${quote.text}"\n— ${quote.author}\n\nShared via QuoteVerse.';
     await Share.share(textToShare);
   }
 
   // Export PNG from a dedicated dialog boundary
   Future<void> _shareAsImage(Quote quote) async {
     try {
-      final boundary = _previewBoundaryKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      final boundary =
+          _previewBoundaryKey.currentContext?.findRenderObject()
+              as RenderRepaintBoundary?;
       if (boundary == null) return;
 
       final image = await boundary.toImage(pixelRatio: 3.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      
+
       if (byteData == null) return;
       final pngBytes = byteData.buffer.asUint8List();
 
       final tempDir = await getTemporaryDirectory();
-      final file = await File('${tempDir.path}/quote_category_${DateTime.now().millisecondsSinceEpoch}.png').create();
+      final file = await File(
+        '${tempDir.path}/quote_category_${DateTime.now().millisecondsSinceEpoch}.png',
+      ).create();
       await file.writeAsBytes(pngBytes);
 
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: '"${quote.text}" — ${quote.author}',
-      );
+      await Share.shareXFiles([
+        XFile(file.path),
+      ], text: '"${quote.text}" — ${quote.author}');
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to export image: $e')),
-      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to export image: $e')));
     }
   }
 
@@ -161,14 +168,21 @@ class _CategoryQuotesScreenState extends State<CategoryQuotesScreen> {
                     if (!isGold) ...[
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF185FA5),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: const Text(
                           'GOLD',
-                          style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -187,7 +201,9 @@ class _CategoryQuotesScreenState extends State<CategoryQuotesScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Gold Feature Required'),
-        content: Text('$featureName is exclusively available to Gold members. Upgrade now to get priority access, image card exports, and personalized collections!'),
+        content: Text(
+          '$featureName is exclusively available to Gold members. Upgrade now to get priority access, image card exports, and personalized collections!',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -218,9 +234,7 @@ class _CategoryQuotesScreenState extends State<CategoryQuotesScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('${widget.category.name} Quotes'),
-      ),
+      appBar: AppBar(title: Text('${widget.category.name} Quotes')),
       body: categoryQuotes.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
@@ -231,88 +245,119 @@ class _CategoryQuotesScreenState extends State<CategoryQuotesScreen> {
                 final isFav = quotes.isFavorite(quote);
 
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: Column(
-                    children: [
-                      QuoteCard(quote: quote, isCompact: true),
-                      const SizedBox(height: 6),
-                      // Actions row below the card
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: isDark ? const Color(0xFF1E293B).withOpacity(0.5) : Colors.grey.shade50,
-                          borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            // Heart Save Icon
-                            IconButton(
-                              iconSize: 20,
-                              icon: Icon(
-                                isFav ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                                color: isFav ? Colors.red : null,
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: Column(
+                        children: [
+                          QuoteCard(quote: quote, isCompact: true),
+                          const SizedBox(height: 6),
+                          // Actions row below the card
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? const Color(
+                                      0xFF1E293B,
+                                    ).withValues(alpha: 0.5)
+                                  : Colors.grey.shade50,
+                              borderRadius: const BorderRadius.vertical(
+                                bottom: Radius.circular(16),
                               ),
-                              onPressed: () async {
-                                final errorMsg = await quotes.toggleFavorite(quote, userPlan);
-                                if (errorMsg != null) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(errorMsg),
-                                      behavior: SnackBarBehavior.floating,
-                                      action: SnackBarAction(
-                                        label: 'Upgrade',
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            SlideRightToLeftRoute(page: const PlansScreen()),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(isFav ? 'Removed from favorites' : 'Added to favorites'),
-                                      duration: const Duration(seconds: 1),
-                                      behavior: SnackBarBehavior.floating,
-                                    ),
-                                  );
-                                }
-                              },
                             ),
-                            const SizedBox(width: 12),
-                            // Share Icon
-                            IconButton(
-                              iconSize: 20,
-                              icon: const Icon(Icons.share_rounded),
-                              onPressed: () => _showShareOptions(context, quote, userPlan),
-                            ),
-                            const SizedBox(width: 12),
-                            // Copy Icon
-                            IconButton(
-                              iconSize: 20,
-                              icon: const Icon(Icons.copy_rounded),
-                              onPressed: () {
-                                Clipboard.setData(ClipboardData(
-                                  text: '"${quote.text}" — ${quote.author}',
-                                ));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Copied!'),
-                                    duration: Duration(seconds: 1),
-                                    behavior: SnackBarBehavior.floating,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Heart Save Icon
+                                IconButton(
+                                  iconSize: 20,
+                                  icon: Icon(
+                                    isFav
+                                        ? Icons.favorite_rounded
+                                        : Icons.favorite_border_rounded,
+                                    color: isFav ? Colors.red : null,
                                   ),
-                                );
-                              },
+                                  onPressed: () async {
+                                    final errorMsg = await quotes
+                                        .toggleFavorite(quote, userPlan);
+                                    if (!context.mounted) return;
+                                    if (errorMsg != null) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(errorMsg),
+                                          behavior: SnackBarBehavior.floating,
+                                          action: SnackBarAction(
+                                            label: 'Upgrade',
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                SlideRightToLeftRoute(
+                                                  page: const PlansScreen(),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      if (!context.mounted) return;
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            isFav
+                                                ? 'Removed from favorites'
+                                                : 'Added to favorites',
+                                          ),
+                                          duration: const Duration(seconds: 1),
+                                          behavior: SnackBarBehavior.floating,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                                const SizedBox(width: 12),
+                                // Share Icon
+                                IconButton(
+                                  iconSize: 20,
+                                  icon: const Icon(Icons.share_rounded),
+                                  onPressed: () => _showShareOptions(
+                                    context,
+                                    quote,
+                                    userPlan,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                // Copy Icon
+                                IconButton(
+                                  iconSize: 20,
+                                  icon: const Icon(Icons.copy_rounded),
+                                  onPressed: () {
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text:
+                                            '"${quote.text}" — ${quote.author}',
+                                      ),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Copied!'),
+                                        duration: Duration(seconds: 1),
+                                        behavior: SnackBarBehavior.floating,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                )
+                    )
                     .animate()
                     .fadeIn(delay: (index * 50).ms, duration: 300.ms)
                     .slideY(begin: 0.05, end: 0.0, curve: Curves.easeOutCubic);

@@ -52,11 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ? '${name[0].toUpperCase()}${name.substring(1)}'
           : 'User';
 
-      Provider.of<AuthProvider>(context, listen: false).login(
-        email: email,
-        name: capitalizedName,
-        remember: _rememberMe,
-      );
+      Provider.of<AuthProvider>(
+        context,
+        listen: false,
+      ).login(email: email, name: capitalizedName, remember: _rememberMe);
 
       _navigateToMain();
     }
@@ -68,9 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigateToMain() {
-    Navigator.of(context).pushReplacement(
-      FadeScaleRoute(page: const MainNavigationScreen()),
-    );
+    Navigator.of(
+      context,
+    ).pushReplacement(FadeScaleRoute(page: const MainNavigationScreen()));
   }
 
   @override
@@ -84,7 +83,10 @@ class _LoginScreenState extends State<LoginScreen> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 16.0,
+              ),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minHeight: constraints.maxHeight - 32,
@@ -102,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: primaryColor.withOpacity(0.1),
+                                color: primaryColor.withValues(alpha: 0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
@@ -114,7 +116,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 12),
                             Text(
                               'QuoteVerse',
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(
                                     fontSize: 28,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.5,
@@ -123,11 +126,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         const SizedBox(height: 40),
-                        
+
                         // Header text
                         Text(
                           'Welcome Back!',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -135,12 +139,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 6),
                         Text(
                           'Sign in to continue',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: isDark
+                                    ? const Color(0xFF94A3B8)
+                                    : const Color(0xFF64748B),
                               ),
                         ),
                         const SizedBox(height: 32),
-                        
+
                         // Email Field
                         TextFormField(
                           controller: _emailController,
@@ -161,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                         const SizedBox(height: 16),
-                        
+
                         // Password Field
                         TextFormField(
                           controller: _passwordController,
@@ -171,7 +178,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             prefixIcon: const Icon(Icons.lock_outline),
                             suffixIcon: IconButton(
                               icon: Icon(
-                                _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                _obscurePassword
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -191,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                         const SizedBox(height: 8),
-                        
+
                         // Remember Me & Forgot Password
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,9 +223,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 const SizedBox(width: 8),
                                 Text(
                                   'Remember Me',
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                  style: Theme.of(context).textTheme.bodyMedium
+                                      ?.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -240,33 +248,46 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         const SizedBox(height: 24),
-                        
+
                         // Sign In Button
                         ElevatedButton(
                           onPressed: _handleSignIn,
                           child: const Text('Sign In'),
                         ),
                         const SizedBox(height: 20),
-                        
+
                         // Divider
                         Row(
                           children: [
-                            Expanded(child: Divider(color: Theme.of(context).dividerColor)),
+                            Expanded(
+                              child: Divider(
+                                color: Theme.of(context).dividerColor,
+                              ),
+                            ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
                               child: Text(
                                 'OR',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
                                       fontWeight: FontWeight.bold,
-                                      color: isDark ? const Color(0xFF475569) : const Color(0xFF94A3B8),
+                                      color: isDark
+                                          ? const Color(0xFF475569)
+                                          : const Color(0xFF94A3B8),
                                     ),
                               ),
                             ),
-                            Expanded(child: Divider(color: Theme.of(context).dividerColor)),
+                            Expanded(
+                              child: Divider(
+                                color: Theme.of(context).dividerColor,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 20),
-                        
+
                         // Google Button
                         OutlinedButton(
                           onPressed: () {
@@ -279,9 +300,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
-                              color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                              color: isDark
+                                  ? const Color(0xFF334155)
+                                  : const Color(0xFFE2E8F0),
                             ),
-                            foregroundColor: isDark ? Colors.white : const Color(0xFF1E293B),
+                            foregroundColor: isDark
+                                ? Colors.white
+                                : const Color(0xFF1E293B),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -293,7 +318,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 errorBuilder: (context, error, stackTrace) {
                                   // Fallback colored text container if offline
                                   return Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
                                     decoration: BoxDecoration(
                                       color: Colors.red.shade400,
                                       borderRadius: BorderRadius.circular(4),
@@ -315,7 +343,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        
+
                         // Guest Button
                         OutlinedButton(
                           onPressed: _handleGuestSignIn,
@@ -326,15 +354,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const Spacer(),
                         const SizedBox(height: 24),
-                        
+
                         // Sign Up footer
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               "Don't have an account? ",
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    color: isDark
+                                        ? const Color(0xFF94A3B8)
+                                        : const Color(0xFF64748B),
                                   ),
                             ),
                             GestureDetector(
@@ -365,10 +396,7 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           },
         ),
-      )
-          .animate()
-          .fadeIn(duration: 400.ms)
-          .slideY(begin: 0.1, end: 0.0, curve: Curves.easeOutCubic),
+      ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.1, end: 0.0, curve: Curves.easeOutCubic),
     );
   }
 }

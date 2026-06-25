@@ -18,15 +18,17 @@ class QuoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = Theme.of(context).primaryColor;
-    
+
     // Design tokens based on compact status
     final cardPadding = isCompact ? 20.0 : 32.0;
     final quoteFontSize = isCompact ? 18.0 : 22.0;
     final authorFontSize = isCompact ? 13.0 : 15.0;
-    
-    final mutedTextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+
+    final mutedTextColor = isDark
+        ? const Color(0xFF94A3B8)
+        : const Color(0xFF6B7280);
     final cardBg = Theme.of(context).cardColor;
-    final shadowColor = Colors.black.withOpacity(isDark ? 0.3 : 0.05);
+    final shadowColor = Colors.black.withValues(alpha: isDark ? 0.3 : 0.05);
 
     Widget cardContent = Container(
       padding: EdgeInsets.all(cardPadding),
@@ -52,12 +54,12 @@ class QuoteCard extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'serif',
                 fontSize: isCompact ? 60 : 90,
-                color: primaryColor.withOpacity(0.08),
+                color: primaryColor.withValues(alpha: 0.08),
                 height: 0.8,
               ),
             ),
           ),
-          
+
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -72,20 +74,19 @@ class QuoteCard extends StatelessWidget {
                     fontSize: quoteFontSize,
                     fontWeight: FontWeight.w600,
                     fontStyle: FontStyle.normal,
-                    color: isDark ? const Color(0xFFF1F5F9) : const Color(0xFF1C1C1E),
+                    color: isDark
+                        ? const Color(0xFFF1F5F9)
+                        : const Color(0xFF1C1C1E),
                     height: 1.4,
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              
+
               // Thin Divider
-              Divider(
-                color: Theme.of(context).dividerColor,
-                thickness: 1,
-              ),
+              Divider(color: Theme.of(context).dividerColor, thickness: 1),
               const SizedBox(height: 12),
-              
+
               // Author text (italic, muted, right aligned)
               Align(
                 alignment: Alignment.centerRight,
@@ -107,10 +108,7 @@ class QuoteCard extends StatelessWidget {
 
     // If a boundary key is provided, wrap in a RepaintBoundary for PNG exports
     if (boundaryKey != null) {
-      return RepaintBoundary(
-        key: boundaryKey,
-        child: cardContent,
-      );
+      return RepaintBoundary(key: boundaryKey, child: cardContent);
     }
 
     return cardContent;
