@@ -32,7 +32,9 @@ class QuoteProvider extends ChangeNotifier {
   bool get isAiLoading => _isAiLoading;
   String? get aiError => _aiError;
 
-  QuoteProvider() {
+  final AssetBundle _assetBundle;
+
+  QuoteProvider({AssetBundle? assetBundle}) : _assetBundle = assetBundle ?? rootBundle {
     _init();
   }
 
@@ -48,7 +50,7 @@ class QuoteProvider extends ChangeNotifier {
 
   Future<void> _loadQuotesFromAssets() async {
     try {
-      final jsonString = await rootBundle.loadString('assets/quotes.json');
+      final jsonString = await _assetBundle.loadString('assets/quotes.json');
       final List<dynamic> jsonList = json.decode(jsonString);
       _allQuotes = jsonList.map((item) => Quote.fromJson(item)).toList();
     } catch (e) {
